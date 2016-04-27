@@ -7,6 +7,10 @@ const Test = React.createClass({
         <h1>This is a React H1 heading</h1>
         <h2>This is a React H2 heading</h2>
         <h3>This is a React H3 heading</h3>
+        <h4>This is a React H4 heading</h4>
+        <h1>Hot Reload</h1>
+        <h2>Second reload</h2>
+        <h2>Third reload</h2>
       </div>
     );
   }

@@ -1,32 +1,33 @@
 [![Build Status](https://travis-ci.org/ccfcheng/recommendation-app.svg?branch=develop)](https://travis-ci.org/ccfcheng/recommendation-app)
 [![Stories in Ready](https://badge.waffle.io/ccfcheng/recommendation-app.png?label=ready&title=Ready)](https://waffle.io/ccfcheng/recommendation-app)
-# Restaurant Recommendation Web App 
+# Restaurant Recommendation Web App
 
-Proof of concept web app that recommends local restaurants to users. Powering this is a custom recommendation engine that takes a user's historical choices into account in its machine learning algorithm. 
+Proof of concept web app that recommends local restaurants to users. Powering this is a custom recommendation engine that takes a user's historical choices into account in its machine learning algorithm.
 
 The frontend is built in React, and the server is built in Node/Express. Firebase is used for user and user data storage.
 
 ## Getting Started
 
-After cloning the repo to your system, run `npm install` to install dependencies, then run `npm start` to create the Webpack bundle and start the development server. 
+After cloning the repo to your system, running `npm run dev` will start the Webpack Dev Server with a bundle that features live incremental builds. Navigate to [http://localhost:8080](http://localhost:8080) to see the web app in development.
 
-Locally, the web app will be hosted on `http://localhost:8080`. 
+### Development & Scripts
 
-Currently, `nodemon` enables server reloads on change when using `npm run dev`, but any frontend changes will have to be rebuilt using Webpack. 
-
-In the near future, `webpack-dev-server` will be used to enable live incremental builds on frontend changes to improve iteration time. 
-
-### Prerequisities
-
-The development environment for this repo is using Node 5.11 and npm 3.8.6.
-
-### Installing and Scripts
+The development environment for this repo is using Node 6.0.0 and npm 3.8.6.
 
 If node and npm are not installed on your system, it is recommended to install [nvm](https://github.com/creationix/nvm) to switch between versions.
 
-Quick start: Build webpack bundle and start server
+Edit files in `./app/` folder, this is the entry point for the Webpack bundle. Built bundle will be written to `./dist` folder.
+
+If any changes need to be made to the main html wrapper at `./index.html`, they will be copied to the `./dist` folder on build.
+
+Start development server:
 ```
-npm start
+npm run dev
+```
+
+Simulate Production/Heroku deployment behavior:
+```
+npm run prod
 ```
 
 Run Mocha/Chai Unit Tests:
@@ -38,34 +39,9 @@ To run tests continuously:
 npm run test:watch
 ```
 
-Clean the `dist` directory:
-```
-npm run clean
-```
-
-Create copy of `index.html` from `src` to `dist`:
-```
-npm run move
-```
-
-Create Webpack bundle in `dist`:
-```
-npm run pack
-```
-
-Clean `dist` folder and create appropriate bundle:
-```
-npm run bundle
-```
-
-Run development with nodemon hot reloads on server:
-```
-npm run dev
-```
-
 ## Deployment
 
-Future iteration will have `master` branch hosted on Heroku. Travis CI is implemented in the deployment workflow.
+Merges to `master` branch are automatically deployed on Heroku at [https://yelp-rec.herokuapp.com/](https://yelp-rec.herokuapp.com/). Travis CI is implemented in the deployment workflow.
 
 ## Built With
 

@@ -17,6 +17,9 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# .DS_Store from OS X
+.DS_Store
+
 # node-waf configuration
 .lock-wscript
 
@@ -32,5 +35,5 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# dist folder of bundled app
+# dist folder
 dist/
