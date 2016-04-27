@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ccfcheng/recommendation-app.svg?branch=develop)](https://travis-ci.org/ccfcheng/recommendation-app)
 [![Stories in Ready](https://badge.waffle.io/ccfcheng/recommendation-app.png?label=ready&title=Ready)](https://waffle.io/ccfcheng/recommendation-app)
 # Restaurant Recommendation Web App 
 
@@ -11,13 +12,13 @@ After cloning the repo to your system, run `npm install` to install dependencies
 
 Locally, the web app will be hosted on `http://localhost:8080`. 
 
-Currently, `nodemon` enables hot server reloads on change, but any frontend changes will have to be rebuilt using Webpack. 
+Currently, `nodemon` enables server reloads on change when using `npm run dev`, but any frontend changes will have to be rebuilt using Webpack. 
 
 In the near future, `webpack-dev-server` will be used to enable live incremental builds on frontend changes to improve iteration time. 
 
 ### Prerequisities
 
-The development environment for this repo is using Node 5.11 and npm 3.8.6. Travis CI will be used in the future.
+The development environment for this repo is using Node 5.11 and npm 3.8.6.
 
 ### Installing and Scripts
 
@@ -57,9 +58,14 @@ Clean `dist` folder and create appropriate bundle:
 npm run bundle
 ```
 
+Run development with nodemon hot reloads on server:
+```
+npm run dev
+```
+
 ## Deployment
 
-Future iteration will have `master` branch hosted on Heroku. Travis CI will also be implemented in the deployment workflow.
+Future iteration will have `master` branch hosted on Heroku. Travis CI is implemented in the deployment workflow.
 
 ## Built With
 
@@ -71,6 +77,7 @@ Future iteration will have `master` branch hosted on Heroku. Travis CI will also
 * [Firebase](https://www.firebase.com/) - Database
 * [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/) - Unit Testing
 * [Webpack](https://webpack.github.io/) - Bundles and Builds
+* [Travis CI](https://travis-ci.org) - Continuous Integration
 
 ## Authors
 
