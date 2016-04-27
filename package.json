@@ -4,7 +4,12 @@
   "description": "[![Stories in Ready](https://badge.waffle.io/ccfcheng/recommendation-app.png?label=ready&title=Ready)](https://waffle.io/ccfcheng/recommendation-app) # recommendation-app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-core/register"
+    "test": "mocha --require babel-core/register",
+    "clean": "rm ./app/dist/*.*",
+    "move": "cp ./app/src/index.html ./app/dist/index.html",
+    "pack": "webpack ./app/src/app.js ./app/dist/app.bundle.js --module-bind 'js=babel-loader'",
+    "bundle": "npm run clean && npm run pack && npm run move",
+    "start": "npm run bundle && nodemon ./index.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +28,9 @@
     "babel-preset-react": "^6.5.0",
     "express": "^4.13.4",
     "firebase": "^2.4.2",
+    "global": "^4.3.0",
     "material-ui": "^0.15.0-beta.2",
+    "nodemon": "^1.9.1",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-tap-event-plugin": "^1.0.0",
