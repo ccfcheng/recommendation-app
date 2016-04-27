@@ -4,13 +4,14 @@
   "description": "[![Stories in Ready](https://badge.waffle.io/ccfcheng/recommendation-app.png?label=ready&title=Ready)](https://waffle.io/ccfcheng/recommendation-app) # recommendation-app",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-core/register \"./app/src/**/*Spec.js\"",
+    "test": "mocha --require babel-core/register \"./app/**/*.spec.js\"",
     "test:watch": "npm test -- --watch",
-    "clean": "rm ./app/dist/*.*",
-    "move": "cp ./app/src/index.html ./app/dist/index.html",
-    "pack": "webpack ./app/src/app.js ./app/dist/app.bundle.js --module-bind 'js=babel-loader'",
+    "clean": "rm -rf ./dist/ && mkdir dist",
+    "move": "cp ./app/index.html ./dist/index.html",
+    "pack": "webpack ./app/app.js ./dist/app.bundle.js --module-bind 'js=babel-loader'",
     "bundle": "npm run clean && npm run pack && npm run move",
-    "start": "npm run bundle && nodemon ./index.js"
+    "start": "npm run bundle && node ./index.js",
+    "dev": "npm run bundle && nodemon ./index.js"
   },
   "repository": {
     "type": "git",
