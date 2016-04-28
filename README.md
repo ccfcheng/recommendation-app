@@ -8,7 +8,7 @@ The frontend is built in React, and the server is built in Node/Express. Firebas
 
 ## Getting Started
 
-After cloning the repo to your system, running `npm run dev` will start the Webpack Dev Server with a bundle that features live incremental builds. Navigate to [http://localhost:8080](http://localhost:8080) to see the web app in development.
+After cloning the repo to your system, running `npm run dev` will install dependencies, then start the Webpack Dev Server with a bundle that features live incremental builds. Navigate to [http://localhost:8080](http://localhost:8080) to see the web app in development.
 
 ### Development & Scripts
 
@@ -20,12 +20,27 @@ Edit files in `./app/` folder, this is the entry point for the Webpack bundle. B
 
 If any changes need to be made to the main html wrapper at `./index.html`, they will be copied to the `./dist` folder on build.
 
-Start development server:
+Start development server with live Webpack incremental builds:
+```
+npm run serve
+```
+
+Start production server and build Webpack bundle:
+```
+npm run serve:dist
+```
+
+Start production server only:
+```
+npm start
+```
+
+Start dev server from fresh state with install:
 ```
 npm run dev
 ```
 
-Simulate Production/Heroku deployment behavior:
+Simulate Heroku deployment behavior with fresh install and build:
 ```
 npm run prod
 ```

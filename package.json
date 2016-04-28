@@ -10,11 +10,14 @@
   "scripts": {
     "bundle": "npm run clean && npm run move && npm run pack",
     "clean": "rm -rf ./dist && mkdir dist",
-    "dev": "npm i && npm prune && webpack-dev-server",
+    "dev": "npm i && npm run serve",
     "heroku-postbuild": "npm run bundle",
     "move": "cp ./index.html ./dist/index.html",
     "pack": "webpack --config ./production.config.js",
-    "prod": "npm i && npm prune && npm run heroku-postbuild && npm start",
+    "postinstall": "npm prune",
+    "prod": "npm i && npm run serve:dist",
+    "serve": "webpack-dev-server",
+    "serve:dist": "npm run bundle && npm start",
     "start": "NODE_ENV=production node ./index.js",
     "test": "mocha --require babel-core/register \"./app/**/*.spec.js\"",
     "test:watch": "npm test -- --watch"
