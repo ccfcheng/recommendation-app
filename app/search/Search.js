@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-export default class Search extends Component {
-  render() {
+const SearchContainer = React.createClass({
+  render: function() {
+    return (
+      <Search/>
+    );
+  }
+});
+
+const Search = React.createClass({
+  render: function() {
     return (
       <div>
         <h1>Search Screen</h1>
@@ -12,4 +20,6 @@ export default class Search extends Component {
       </div>
     );
   }
-}
+});
+
+export { SearchContainer };
