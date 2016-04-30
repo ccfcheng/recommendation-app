@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FBLogin from 'react-facebook-login';
 import { Link } from 'react-router';
 
 export default class Login extends Component {
@@ -6,9 +7,14 @@ export default class Login extends Component {
     return (
       <div>
         <h1>Login Screen</h1>
-        <ul>
-          <li><Link to="/recommendations">Sign In</Link></li>
-        </ul>
+        <Link to="/recommendations">
+          <FBLogin
+            appId="120536275017205"
+            autoLoad={false}
+            scope={"public_profile"}
+            callback={(e) => {console.log(e)}}
+          />
+        </Link>
       </div>
     );
   }
