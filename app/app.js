@@ -1,21 +1,32 @@
 import document from 'global/document';
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router';
-import History from './history/History';
-import Login from './login/Login';
-import Profile from './profile/Profile';
-import Recommendations from './recommendations/Recommendations';
-import Search from './search/Search';
+import { createStore, combineReducers } from 'redux';
+import { HistoryContainer } from './history/History';
+import LoginContainer from './login/Login';
+import { LoginReducer } from './login/LoginReducer';
+import ProfileContainer from './profile/Profile';
+import RecommendationsContainer from './recommendations/Recommendations';
+import { SearchContainer } from './search/Search';
+
+const reducer = combineReducers({
+  user: LoginReducer
+});
+
+const store = createStore(reducer);
 
 const appContainer = document.getElementById('app');
 
 render((
-  <Router history={hashHistory}>
-    <Route path="/" component={Login}/>
-    <Route path="/history" component={History}/>
-    <Route path="/profile" component={Profile}/>
-    <Route path="/recommendations" component={Recommendations}/>
-    <Route path="/search" component={Search}/>
-  </Router>
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      <Route path="/" component={LoginContainer}/>
+      <Route path="/history" component={HistoryContainer}/>
+      <Route path="/profile" component={ProfileContainer}/>
+      <Route path="/recommendations" component={RecommendationsContainer}/>
+      <Route path="/search" component={SearchContainer}/>
+    </Router>
+  </Provider>
 ), appContainer);

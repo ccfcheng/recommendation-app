@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-export default class History extends Component {
-  render() {
+const HistoryContainer = React.createClass({
+  render: function() {
+    return (
+      <History/>
+    );
+  }
+});
+
+const History = React.createClass({
+  render: function() {
     return (
       <div>
         <h1>History Screen</h1>
@@ -12,4 +20,6 @@ export default class History extends Component {
       </div>
     );
   }
-}
+});
+
+export { HistoryContainer };
