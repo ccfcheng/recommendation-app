@@ -8,45 +8,36 @@ import {
   setUserName,
   setUserProfileImage,
 } from './LoginReducer';
-import { FIREBASE_URL } from '../appConstants';
+import { FIREBASE_URL, SPLASH_URL } from '../appConstants';
+import { checkAuth } from '../auth/AuthFacebook';
 
 const LoginContainer = React.createClass({
-  // mixins: [ReactFireMixin],
-
-  onLogin: function() {
-    const { dispatch } = this.props;
-    const ref = new Firebase(FIREBASE_URL);
-    const usersRef = ref.child('users');
-    ref.authWithOAuthPopup("facebook", function(error, authData) {
-      if (error) {
-        console.log("Login Failed!", error);
-      } else {
-        const {
-          displayName,
-          email,
-          profileImageURL,
-        } = authData.facebook;
-        const id = authData.uid;
-        dispatch(setUserEmail(email));
-        dispatch(setUserID(id));
-        dispatch(setUserName(displayName));
-        dispatch(setUserProfileImage(profileImageURL));
-        usersRef.child(id).set({displayName, email, profileImageURL});
-      }
-    });
-  },
 
   render: function() {
     return (
-      <Login onLogin={this.onLogin} />
+      <Login onLogin={() => this.props.dispatch(checkAuth())} />
     );
   }
 });
 
+const styles = {
+  splash: {
+    backgroundImage: 'url(' + SPLASH_URL + ')',
+    width: '320',
+    height: '568',
+    margin: '0',
+    padding: '0',
+    backgroundSize: 'cover',
+  },
+  button: {
+
+  }
+};
+
 const Login = React.createClass({
   render: function() {
     return (
-      <div>
+      <div style={styles.splash}>
         <h1>Login Screen</h1>
         <Link to="/recommendations">
           <div onClick={this.props.onLogin}>
@@ -60,3 +51,4 @@ const Login = React.createClass({
 });
 
 export default connect()(LoginContainer);
+

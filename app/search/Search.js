@@ -22,4 +22,4 @@ const Search = React.createClass({
   }
 });
 
-export { SearchContainer };
+export default SearchContainer;

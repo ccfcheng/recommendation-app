@@ -22,4 +22,4 @@ const History = React.createClass({
   }
 });
 
-export { HistoryContainer };
+export default HistoryContainer;

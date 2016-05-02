@@ -1,19 +1,16 @@
 import Firebase from 'firebase';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import { FIREBASE_URL } from '../appConstants';
+import { logoutUser } from '../auth/AuthFacebook';
 
 const RecommendationsContainer = React.createClass({
-  logOut: function() {
-    const ref = new Firebase(FIREBASE_URL);
-    // console.log('Auth status before unauth():', ref.getAuth());
-    ref.unauth();
-  },
 
   render: function() {
     return (
       <Recommendations
-        onClick={this.logOut}
+        onClick={() => this.props.dispatch(logoutUser())}
       />
     );
   }
@@ -35,4 +32,4 @@ const Recommendations = React.createClass({
   }
 });
 
-export default RecommendationsContainer;
+export default connect()(RecommendationsContainer);
