@@ -14,7 +14,7 @@ const usersRef = new Firebase(USERS_URL);
 // checkAuth() first queries Firebase to check auth status
 // If logged in, grab user data from Firebase then dispatch to redux
 export const checkAuth = () => (dispatch, getState) => {
-  // If not logged in, call OAuth popup, grab uid and call isRegistered(uid)
+  // If not logged in, call OAuth popup, grab uid and register user if needed
   if (ref.getAuth() === null) {
     ref.authWithOAuthPopup("facebook", function(error, authData) {
       if (error) {
@@ -27,25 +27,19 @@ export const checkAuth = () => (dispatch, getState) => {
         } = authData.facebook;
         const uid = authData.uid;
         // Add user if not registered
-        if(!isRegistered(uid)) {
-          usersRef.child(uid).set({displayName, email, profileImageURL});
-        }
+        usersRef.child(uid).once('value', (data) => {
+          if (data.val() === null) {
+            usersRef.child(uid).set({displayName, email, profileImageURL})
+          } else {
+          }
+        });
         dispatch(setUserEmail(email));
         dispatch(setUserID(uid));
         dispatch(setUserName(displayName));
         dispatch(setUserProfileImage(profileImageURL));
-        console.log('redux state:', getState());
       }
     });
   }
-};
-
-// isRegistered(uid) returns a boolean for whether user exists for uid
-const isRegistered = (uid) => {
-  const user = usersRef.child(uid);
-  return user.once('value', (data) => {
-    return data.val() !== null;
-  });
 };
 
 // logoutUser resets redux state and sends unauth message to Firebase

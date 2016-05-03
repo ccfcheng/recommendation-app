@@ -1,8 +1,11 @@
 import document from 'global/document';
 import React from 'react';
 import { render } from 'react-dom';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import {
   applyMiddleware,
   combineReducers,
@@ -16,6 +19,8 @@ import ProfileContainer from './profile/Profile';
 import RecommendationsContainer from './recommendations/Recommendations';
 import SearchContainer from './search/Search';
 
+injectTapEventPlugin();
+
 const reducer = combineReducers({
   user: LoginReducer
 });
@@ -26,12 +31,14 @@ const appContainer = document.getElementById('app');
 
 render((
   <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={LoginContainer}/>
-      <Route path="/history" component={HistoryContainer}/>
-      <Route path="/profile" component={ProfileContainer}/>
-      <Route path="/recommendations" component={RecommendationsContainer}/>
-      <Route path="/search" component={SearchContainer}/>
-    </Router>
+    <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <Router history={hashHistory}>
+        <Route path="/" component={LoginContainer}/>
+        <Route path="/history" component={HistoryContainer}/>
+        <Route path="/profile" component={ProfileContainer}/>
+        <Route path="/recommendations" component={RecommendationsContainer}/>
+        <Route path="/search" component={SearchContainer}/>
+      </Router>
+    </MuiThemeProvider>
   </Provider>
 ), appContainer);
