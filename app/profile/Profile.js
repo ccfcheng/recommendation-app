@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-const ProfileContainer = React.createClass({
-  render: function() {
+class ProfileContainer extends Component {
+  render() {
     return (
       <Profile
         id={this.props.id}
@@ -13,10 +13,10 @@ const ProfileContainer = React.createClass({
       />
     );
   }
-});
+}
 
-const Profile = React.createClass({
-  render: function() {
+class Profile extends Component {
+  render() {
     return (
       <div>
         <h1>User Profile</h1>
@@ -32,15 +32,15 @@ const Profile = React.createClass({
       </div>
     );
   }
-});
+}
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     email: state.user.email,
     id: state.user.id,
     name: state.user.name,
     profileImage: state.user.profileImage,
   };
-}
+};
 
 export default connect(mapStateToProps)(ProfileContainer);

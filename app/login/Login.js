@@ -1,26 +1,29 @@
-import Firebase from 'firebase';
-import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
+// import RaisedButton from 'material-ui/RaisedButton';
+// import FontIcon from 'material-ui/FontIcon';
+import React, { Component } from 'react';
+import FBLogin from 'react-facebook-login';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import {
-  setUserEmail,
-  setUserID,
-  setUserName,
-  setUserProfileImage,
-} from './LoginReducer';
-import { FIREBASE_URL, SPLASH_URL3 } from '../appConstants';
-import { checkAuth } from '../auth/AuthFacebook';
+import { SPLASH_URL3 } from '../appConstants';
+import { loginUser } from '../auth/AuthFacebook';
 
-const LoginContainer = React.createClass({
+class LoginContainer extends Component{
+  constructor(props) {
+    super(props);
+    this.onLogin = this.onLogin.bind(this);
+  }
 
-  render: function() {
+  onLogin(authData) {
+    const token = authData.accessToken;
+    this.props.dispatch(loginUser(token));
+  }
+
+  render() {
     return (
-      <Login onLogin={() => this.props.dispatch(checkAuth())} />
+      <Login onLogin={this.onLogin} />
     );
   }
-});
+}
 
 const styles = {
   splash: {
@@ -59,12 +62,16 @@ const styles = {
 
   button: {
     margin: 'auto',
-    width: '222px',
+    width: '204px',
   }
 };
 
-const Login = React.createClass({
-  render: function() {
+class Login extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
       <div style={styles.splash}>
 
@@ -80,12 +87,10 @@ const Login = React.createClass({
 
           <div style={styles.button}>
             <Link to="/recommendations">
-              <RaisedButton
-                onClick={this.props.onLogin}
-                label="login with facebook"
-                backgroundColor="#3b5998"
-                labelColor="#ffffff"
-                icon={<FontIcon className="fa fa-facebook-official"/>}
+              <FBLogin
+                appId="120536275017205"
+                autoLoad={false}
+                callback={this.props.onLogin}
               />
             </Link>
           </div>
@@ -96,7 +101,7 @@ const Login = React.createClass({
     );
   }
 
-});
+}
 
 export default connect()(LoginContainer);
 

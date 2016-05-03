@@ -1,23 +1,20 @@
-import Firebase from 'firebase';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { FIREBASE_URL } from '../appConstants';
 import { logoutUser } from '../auth/AuthFacebook';
 
-const RecommendationsContainer = React.createClass({
-
-  render: function() {
+class RecommendationsContainer extends Component {
+  render() {
     return (
       <Recommendations
         onClick={() => this.props.dispatch(logoutUser())}
       />
     );
   }
-});
+}
 
-const Recommendations = React.createClass({
-  render: function() {
+class Recommendations extends Component {
+  render() {
     return (
       <div>
         <h1>Main Screen - Recommendations Feed</h1>
@@ -30,6 +27,6 @@ const Recommendations = React.createClass({
       </div>
     );
   }
-});
+}
 
 export default connect()(RecommendationsContainer);
