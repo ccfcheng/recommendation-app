@@ -1,10 +1,9 @@
-// import RaisedButton from 'material-ui/RaisedButton';
-// import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionFace from 'material-ui/svg-icons/action/face';
+import { cyan900, cyan300 } from 'material-ui/styles/colors';
 import React, { Component } from 'react';
-import FBLogin from 'react-facebook-login';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { SPLASH_URL3 } from '../appConstants';
 import { loginUser } from '../auth/AuthFacebook';
 
 class LoginContainer extends Component{
@@ -27,43 +26,44 @@ class LoginContainer extends Component{
 
 const styles = {
   splash: {
-    background: 'url(' + SPLASH_URL3 + ') no-repeat center center',
+    // background: 'url(' + SPLASH_URL3 + ') no-repeat center center',
+    background: 'radial-gradient(' + cyan900 + ',' + cyan300 + ')',
     minHeight: '100vh',
     backgroundSize: 'cover',
   },
 
   title: {
     textAlign: 'center',
-    textShadow: '5px 5px 8px black',
-    fontSize: '2em',
+    textShadow: '0.25em 0.25em 0.5em black',
+    fontSize: '3em',
     color: 'white',
-    marginBottom: '1.5em',
+    marginBottom: '0.5em',
   },
 
   subtitle: {
     textAlign: 'center',
-    textShadow: '3px 3px 5px black',
+    textShadow: '0.125em 0.125em 0.25em black',
     fontSize: '1em',
     color: 'white',
     marginBottom: '1em',
     fontStyle: 'italic',
-    width: '80%',
-    margin: '0em auto 1.5em',
+    width: '10em',
+    margin: '0em auto 2em',
   },
 
   centered: {
     margin: 'auto',
     position: 'absolute',
-    top: '12em',
-    left: '0px',
-    bottom: '0px',
-    right: '0px',
+    top: '9em',
+    left: '0em',
+    bottom: '0em',
+    right: '0em',
   },
 
-  button: {
+  buttonDiv: {
     margin: 'auto',
-    width: '204px',
-  }
+    width: '14.125em',
+  },
 };
 
 class Login extends Component {
@@ -78,19 +78,22 @@ class Login extends Component {
         <div style={styles.centered}>
 
           <div style={styles.title}>
-            Flavor Finder
+            Flavr
           </div>
 
           <div style={styles.subtitle}>
-            Your personalized restaurant recommendations... only one click away!
+            Your custom flavor recommendations... only one click away!
           </div>
 
-          <div style={styles.button}>
+          <div style={styles.buttonDiv}>
             <Link to="/recommendations">
-              <FBLogin
-                appId="120536275017205"
-                autoLoad={false}
-                callback={this.props.onLogin}
+              <RaisedButton
+                label="Login with Facebook"
+                labelPosition="after"
+                labelColor="white"
+                icon={<ActionFace/>}
+                backgroundColor="#3b5998"
+                onClick={this.props.onLogin}
               />
             </Link>
           </div>
@@ -100,7 +103,6 @@ class Login extends Component {
       </div>
     );
   }
-
 }
 
 export default connect()(LoginContainer);

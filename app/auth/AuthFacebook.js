@@ -11,23 +11,20 @@ import {
 const ref = new Firebase(FIREBASE_URL);
 const usersRef = new Firebase(USERS_URL);
 
-export const loginUser = (token) => (dispatch, getState) => {
+export const loginUser = () => (dispatch) => {
   const auth = ref.getAuth();
   if (auth === null) {
-    console.log('not logged in');
-    ref.authWithOAuthToken('facebook', token, (error, authData) => {
-      if (error) {
-        console.log('Login with Facebook token failed');
-      } else {
-        console.log('authData:', authData);
+    ref.authWithOAuthPopup('facebook')
+      .then((authData) => {
         dispatchProfile(authData, dispatch);
-      }
-    });
+      })
+      .catch((error) => {
+        // Add different error handling in the future
+        console.log('Login error:', error);
+      });
   } else {
-    console.log('already logged in:');
     dispatchProfile(auth, dispatch);
   }
-  console.log('current redux state:', getState());
 };
 
 const dispatchProfile = (authData, dispatch) => {
