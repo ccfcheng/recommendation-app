@@ -47,11 +47,21 @@ npm run prod
 
 Run Mocha/Chai Unit Tests:
 ```
-npm test
+npm run mocha
 ```
 To run tests continuously:
 ```
-npm run test:watch
+npm run mocha:watch
+```
+
+Run ESLint:
+```
+npm run lint
+```
+
+Run both unit tests and linting:
+```
+npm test
 ```
 
 ## Deployment

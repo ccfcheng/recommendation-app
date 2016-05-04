@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
-import { Router, Route, hashHistory } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import {
   applyMiddleware,
@@ -32,7 +32,7 @@ const appContainer = document.getElementById('app');
 render((
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <Router history={hashHistory}>
+      <Router history={browserHistory}>
         <Route path="/" component={LoginContainer}/>
         <Route path="/history" component={HistoryContainer}/>
         <Route path="/profile" component={ProfileContainer}/>

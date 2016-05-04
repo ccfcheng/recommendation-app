@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-const HistoryContainer = React.createClass({
-  render: function() {
+export default class HistoryContainer extends Component {
+  render() {
     return (
       <History/>
     );
   }
-});
+}
 
-const History = React.createClass({
-  render: function() {
+class History extends Component {
+  render() {
     return (
       <div>
         <h1>History Screen</h1>
@@ -20,6 +20,4 @@ const History = React.createClass({
       </div>
     );
   }
-});
-
-export default HistoryContainer;
+}
