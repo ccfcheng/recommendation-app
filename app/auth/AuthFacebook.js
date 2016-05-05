@@ -1,4 +1,5 @@
 import Firebase from 'firebase';
+import { browserHistory } from 'react-router';
 import { FIREBASE_URL, USERS_URL } from '../appConstants';
 import {
   resetUser,
@@ -16,14 +17,16 @@ export const loginUser = () => (dispatch) => {
   if (auth === null) {
     ref.authWithOAuthPopup('facebook')
       .then((authData) => {
+        // Save profile data in redux then route to home screen
         dispatchProfile(authData, dispatch);
+        browserHistory.push('/home');
       })
-      .catch((error) => {
-        // Add different error handling in the future
-        console.log('Login error:', error);
+      .catch(() => {
+        // Add error handling in future, this can take an error parameter
       });
   } else {
     dispatchProfile(auth, dispatch);
+    browserHistory.push('/home');
   }
 };
 

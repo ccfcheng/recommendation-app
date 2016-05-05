@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 export default class HistoryContainer extends Component {
   render() {
@@ -12,12 +11,15 @@ export default class HistoryContainer extends Component {
 class History extends Component {
   render() {
     return (
-      <div>
+      <div style={styles.content}>
         <h1>History Screen</h1>
-        <ul>
-          <li><Link to="/recommendations">Go back to Recommendations</Link></li>
-        </ul>
       </div>
     );
   }
 }
+
+const styles = {
+  content: {
+    marginTop: '54px',
+  },
+};
