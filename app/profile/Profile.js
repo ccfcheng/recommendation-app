@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 class ProfileContainer extends Component {
   render() {
@@ -18,7 +17,8 @@ class ProfileContainer extends Component {
 class Profile extends Component {
   render() {
     return (
-      <div>
+      <div style={styles.content}>
+
         <h1>User Profile</h1>
         <div>
           <img src={this.props.image}/>
@@ -26,9 +26,7 @@ class Profile extends Component {
         <h2>{this.props.name}</h2>
         <h3>{this.props.email}</h3>
         <h4>{this.props.id}</h4>
-        <ul>
-          <li><Link to="/recommendations">Go back to Recommendations</Link></li>
-        </ul>
+
       </div>
     );
   }
@@ -44,3 +42,9 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(ProfileContainer);
+
+const styles = {
+  content: {
+    marginTop: '54px',
+  },
+};

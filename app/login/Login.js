@@ -3,7 +3,6 @@ import ActionFace from 'material-ui/svg-icons/action/face';
 import { cyan900, cyan300 } from 'material-ui/styles/colors';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { loginUser } from '../auth/AuthFacebook';
 
 class LoginContainer extends Component{
@@ -26,7 +25,6 @@ class LoginContainer extends Component{
 
 const styles = {
   splash: {
-    // background: 'url(' + SPLASH_URL3 + ') no-repeat center center',
     background: 'radial-gradient(' + cyan900 + ',' + cyan300 + ')',
     minHeight: '100vh',
     backgroundSize: 'cover',
@@ -78,7 +76,7 @@ class Login extends Component {
         <div style={styles.centered}>
 
           <div style={styles.title}>
-            Flavr
+            flavr
           </div>
 
           <div style={styles.subtitle}>
@@ -86,16 +84,14 @@ class Login extends Component {
           </div>
 
           <div style={styles.buttonDiv}>
-            <Link to="/recommendations">
-              <RaisedButton
-                label="Login with Facebook"
-                labelPosition="after"
-                labelColor="white"
-                icon={<ActionFace/>}
-                backgroundColor="#3b5998"
-                onClick={this.props.onLogin}
-              />
-            </Link>
+            <RaisedButton
+              label="Login with Facebook"
+              labelPosition="after"
+              labelColor="white"
+              icon={<ActionFace/>}
+              backgroundColor="#3b5998"
+              onClick={this.props.onLogin}
+            />
           </div>
 
         </div>
