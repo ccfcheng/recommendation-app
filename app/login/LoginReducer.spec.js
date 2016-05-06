@@ -3,43 +3,17 @@ import * as Login from './LoginReducer';
 
 describe('LoginReducer.js:', () => {
 
-  describe('setUserName()', () => {
+  describe('setUserProfile()', () => {
     it('Should return a valid dispatch object', () => {
-      const expected = {
-        type: 'SET_USER_NAME',
-        name: 'Testing'
+      const profile = {
+        email: 'test@gmail.com',
+        firstName: 'test',
+        lastName: 'user',
+        profileImage: 'http://a.b.com',
+        uid: 'facebook:12345',
       };
-      expect(Login.setUserName('Testing')).to.deep.equal(expected);
-    });
-  });
-
-  describe('setUserID()', () => {
-    it('Should return a valid dispatch object', () => {
-      const expected = {
-        type: 'SET_USER_ID',
-        id: 1234
-      };
-      expect(Login.setUserID(1234)).to.deep.equal(expected);
-    });
-  });
-
-  describe('setUserEmail()', () => {
-    it('Should return a valid dispatch object', () => {
-      const expected = {
-        type: 'SET_USER_EMAIL',
-        email: 'test@user.com'
-      };
-      expect(Login.setUserEmail('test@user.com')).to.deep.equal(expected);
-    });
-  });
-
-  describe('setUserProfileImage()', () => {
-    it('Should return a valid dispatch object', () => {
-      const expected = {
-        type: 'SET_USER_PROFILE_IMAGE',
-        profileImage: 'http://a.b.com'
-      };
-      expect(Login.setUserProfileImage('http://a.b.com')).to.deep.equal(expected);
+      const expected = Object.assign({}, profile, {type: 'SET_USER_PROFILE'});
+      expect(Login.setUserProfile(profile)).to.deep.equal(expected);
     });
   });
 
@@ -56,70 +30,39 @@ describe('LoginReducer.js:', () => {
     it('Should have the correct initial state', () => {
       const expected = {
         email: null,
-        id: null,
-        name: null,
-        profileImage: null
+        firstName: null,
+        lastName: null,
+        profileImage: null,
+        uid: null,
       };
       expect(Login.LoginReducer(undefined, {})).to.deep.equal(expected);
     });
 
-    it('Should respond correctly to SET_USER_NAME action', () => {
+    it('Should respond correctly to SET_USER_PROFILE action', () => {
       const expected = {
         email: null,
-        id: null,
-        name: 'Testing',
-        profileImage: null
+        uid: 'facebook:12345',
+        firstName: 'test',
+        lastName: 'user',
+        profileImage: null,
       };
-      expect(Login.LoginReducer(undefined, Login.setUserName('Testing'))).to.deep.equal(expected);
-    });
-
-    it('Should respond correctly to SET_USER_ID action', () => {
-      const expected = {
+      const profile = {
         email: null,
-        id: 1234,
-        name: null,
-        profileImage: null
+        uid: 'facebook:12345',
+        firstName: 'test',
+        lastName: 'user',
+        profileImage: null,
       };
-      expect(Login.LoginReducer(undefined, Login.setUserID(1234))).to.deep.equal(expected);
-    });
-
-    it('Should respond correctly to SET_USER_EMAIL action', () => {
-      const expected = {
-        email: 'test@user.com',
-        id: null,
-        name: null,
-        profileImage: null
-      };
-      expect(Login.LoginReducer(undefined, Login.setUserEmail('test@user.com'))).to.deep.equal(expected);
-    });
-
-    it('Should respond correctly to SET_USER_PROFILE_IMAGE action', () => {
-      const expected = {
-        email: null,
-        id: null,
-        name: null,
-        profileImage: 'http://a.b.com'
-      };
-      expect(Login.LoginReducer(undefined, Login.setUserProfileImage('http://a.b.com'))).to.deep.equal(expected);
-    });
-
-    it('Should be able to set multiple fields sequentially', () => {
-      const expected = {
-        email: null,
-        id: 1234,
-        name: 'Testing',
-        profileImage: null
-      };
-      const newState = Login.LoginReducer(undefined, Login.setUserID(1234));
-      expect(Login.LoginReducer(newState, Login.setUserName('Testing'))).to.deep.equal(expected);
+      expect(Login.LoginReducer(undefined, Login.setUserProfile(profile))).to.deep.equal(expected);
     });
 
     it('Should respond correctly to RESET_USER action', () => {
       const expected = {
         email: null,
-        id: null,
-        name: null,
-        profileImage: null
+        firstName: null,
+        lastName: null,
+        profileImage: null,
+        uid: null,
       };
       expect(Login.LoginReducer(undefined, Login.resetUser())).to.deep.equal(expected);
     });
