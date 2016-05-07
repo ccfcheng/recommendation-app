@@ -1,20 +1,23 @@
 const initialState = {
   email: null,
-  id: null,
-  name: null,
+  firstName: null,
+  lastName: null,
   profileImage: null,
+  uid: null,
 };
 
 export function LoginReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SET_USER_NAME':
-      return Object.assign({}, state, {name: action.name});
-    case 'SET_USER_ID':
-      return Object.assign({}, state, {id: action.id});
-    case 'SET_USER_EMAIL':
-      return Object.assign({}, state, {email: action.email});
-    case 'SET_USER_PROFILE_IMAGE':
-      return Object.assign({}, state, {profileImage: action.profileImage});
+    case 'SET_USER_PROFILE':
+      return Object.assign(
+        {},
+        state,
+        {email: action.email},
+        {firstName: action.firstName},
+        {lastName: action.lastName},
+        {uid: action.uid},
+        {profileImage: action.profileImage}
+      );
     case 'RESET_USER':
       return initialState;
     default:
@@ -22,20 +25,16 @@ export function LoginReducer(state = initialState, action) {
   }
 }
 
-export const setUserName = (name) => {
-  return {type: 'SET_USER_NAME', name: name};
-};
-
-export const setUserID = (id) => {
-  return {type: 'SET_USER_ID', id: id};
-};
-
-export const setUserEmail = (email) => {
-  return {type: 'SET_USER_EMAIL', email: email};
-};
-
-export const setUserProfileImage = (profileImage) => {
-  return {type: 'SET_USER_PROFILE_IMAGE', profileImage: profileImage};
+// Profile is an object in the following format:
+// {
+//   email: STRING,
+//   firstName: STRING,
+//   lastName: STRING,
+//   profileImage: URL_STRING,
+//   uid: STRING,
+// }
+export const setUserProfile = (profile) => {
+  return Object.assign({}, profile, {type: 'SET_USER_PROFILE'});
 };
 
 export const resetUser = () => {
