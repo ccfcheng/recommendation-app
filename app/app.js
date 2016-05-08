@@ -19,11 +19,13 @@ import LoginReducer from './login/LoginReducer';
 import ProfileContainer from './profile/Profile';
 import RecommendationsContainer from './recommendations/Recommendations';
 import SearchContainer from './search/Search';
+import YelpReducer from './yelp/YelpReducer';
 
 injectTapEventPlugin();
 
 const reducer = combineReducers({
-  user: LoginReducer
+  user: LoginReducer,
+  yelp: YelpReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));
