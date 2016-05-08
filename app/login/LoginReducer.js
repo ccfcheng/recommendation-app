@@ -6,7 +6,7 @@ const initialState = {
   uid: null,
 };
 
-export function LoginReducer(state = initialState, action) {
+export default function LoginReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_USER_PROFILE':
       return Object.assign(

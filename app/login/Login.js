@@ -1,9 +1,14 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import ActionFace from 'material-ui/svg-icons/action/face';
 import { cyan900, cyan300 } from 'material-ui/styles/colors';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loginUser } from '../auth/AuthFacebook';
+import { browserHistory } from 'react-router';
+import Database from '../database/Database';
+import { FIREBASE_URL } from '../appConstants';
+
+const DB = new Database(FIREBASE_URL);
 
 class LoginContainer extends Component{
   constructor(props) {
@@ -11,9 +16,32 @@ class LoginContainer extends Component{
     this.onLogin = this.onLogin.bind(this);
   }
 
-  onLogin(authData) {
-    const token = authData.accessToken;
-    this.props.dispatch(loginUser(token));
+  saveProfile(authData) {
+    const uid = authData.uid;
+    // Only do the following if uid is not registered
+    DB.get('users', uid).then((data) => {
+      if (data === null) {
+        let profile = {};
+        profile.email = authData.facebook.email || '';
+        profile.firstName = authData.facebook.cachedUserProfile.first_name || '';
+        profile.lastName = authData.facebook.cachedUserProfile.last_name || '';
+        profile.profileImage = authData.facebook.profileImageURL || '';
+        profile.createdAt = moment().format('MMM D, YYYY');
+        // Set profile at path
+        DB.set(profile, 'users', uid);
+      }
+    });
+
+  }
+
+  onLogin() {
+    // Authenticate with Facebook, create a user in Firebase if necessary,
+    // then change route to Home
+    return DB.login('facebook')
+      .then((authData) => {
+        this.saveProfile(authData);
+        browserHistory.push('/home');
+      });
   }
 
   render() {

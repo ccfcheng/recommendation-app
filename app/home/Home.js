@@ -11,7 +11,10 @@ import ActionHistory from 'material-ui/svg-icons/action/history';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import ActionExit from 'material-ui/svg-icons/action/exit-to-app';
 import NavMenu from 'material-ui/svg-icons/navigation/menu';
-import { logoutUser } from '../auth/AuthFacebook';
+import Database from '../database/Database';
+import { FIREBASE_URL } from '../appConstants';
+
+const DB = new Database(FIREBASE_URL);
 
 class HomeContainer extends Component {
   constructor(props) {
@@ -34,7 +37,7 @@ class HomeContainer extends Component {
     browserHistory.push(path);
     this.setState({open: false});
     if (path === '/') {
-      this.props.dispatch(logoutUser());
+      DB.logout();
     }
   }
 
@@ -92,7 +95,7 @@ class Home extends Component {
 
         <AppBar
           style={styles.navBar}
-          title={<div style={styles.title}>local flavr</div>}
+          title={<div style={styles.title}>flavr</div>}
           iconElementLeft={
             <IconButton onClick={this.props.handleToggle}>
               <NavMenu />

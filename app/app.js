@@ -15,7 +15,7 @@ import thunk from 'redux-thunk';
 import HistoryContainer from './history/History';
 import HomeContainer from './home/Home';
 import LoginContainer from './login/Login';
-import { LoginReducer } from './login/LoginReducer';
+import LoginReducer from './login/LoginReducer';
 import ProfileContainer from './profile/Profile';
 import RecommendationsContainer from './recommendations/Recommendations';
 import SearchContainer from './search/Search';
