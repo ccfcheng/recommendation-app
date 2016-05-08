@@ -1,15 +1,41 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import Database from '../database/Database';
+import { FIREBASE_URL } from '../appConstants';
 import Avatar from 'material-ui/Avatar';
 
+const DB = new Database(FIREBASE_URL);
+
 class ProfileContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      createdAt: null,
+      firstName: null,
+      lastName: null,
+      profileImage: null,
+    };
+  }
+
+  componentWillMount() {
+    const uid = DB.profile().uid;
+    DB.get('users', uid).then((profile) => {
+      const {
+        createdAt,
+        firstName,
+        lastName,
+        profileImage,
+      } = profile;
+      this.setState({createdAt, firstName, lastName, profileImage});
+    });
+  }
+
   render() {
     return (
       <Profile
-        email={this.props.email}
-        firstName={this.props.firstName}
-        lastName={this.props.lastName}
-        profileImage={this.props.profileImage}
+        createdAt={this.state.createdAt}
+        firstName={this.state.firstName}
+        lastName={this.state.lastName}
+        profileImage={this.state.profileImage}
       />
     );
   }
@@ -19,7 +45,7 @@ class Profile extends Component {
 
   render() {
     const {
-      email,
+      createdAt,
       firstName,
       lastName,
       profileImage,
@@ -39,8 +65,8 @@ class Profile extends Component {
           {firstName} {lastName}
         </div>
 
-        <div style={styles.email}>
-          {email}
+        <div style={styles.joined}>
+          Joined on {createdAt}
         </div>
 
       </div>
@@ -48,16 +74,7 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    email: state.user.email,
-    firstName: state.user.firstName,
-    lastName: state.user.lastName,
-    profileImage: state.user.profileImage,
-  };
-};
-
-export default connect(mapStateToProps)(ProfileContainer);
+export default ProfileContainer;
 
 const styles = {
   content: {
@@ -71,8 +88,9 @@ const styles = {
     fontWeight: 'bold',
   },
 
-  email: {
+  joined: {
     fontStyle: 'italic',
+    fontSize: '0.75em',
   },
 
   image: {

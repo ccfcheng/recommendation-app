@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 import * as Login from './LoginReducer';
+import LoginReducer from './LoginReducer';
 
 describe('LoginReducer.js:', () => {
 
@@ -35,7 +36,7 @@ describe('LoginReducer.js:', () => {
         profileImage: null,
         uid: null,
       };
-      expect(Login.LoginReducer(undefined, {})).to.deep.equal(expected);
+      expect(LoginReducer(undefined, {})).to.deep.equal(expected);
     });
 
     it('Should respond correctly to SET_USER_PROFILE action', () => {
@@ -53,7 +54,7 @@ describe('LoginReducer.js:', () => {
         lastName: 'user',
         profileImage: null,
       };
-      expect(Login.LoginReducer(undefined, Login.setUserProfile(profile))).to.deep.equal(expected);
+      expect(LoginReducer(undefined, Login.setUserProfile(profile))).to.deep.equal(expected);
     });
 
     it('Should respond correctly to RESET_USER action', () => {
@@ -64,7 +65,7 @@ describe('LoginReducer.js:', () => {
         profileImage: null,
         uid: null,
       };
-      expect(Login.LoginReducer(undefined, Login.resetUser())).to.deep.equal(expected);
+      expect(LoginReducer(undefined, Login.resetUser())).to.deep.equal(expected);
     });
   });
 
