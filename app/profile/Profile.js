@@ -62,7 +62,7 @@ class Profile extends Component {
         </div>
 
         <div style={styles.username}>
-          {firstName} {lastName}
+          {firstName + ' ' + lastName}
         </div>
 
         <div style={styles.joined}>
