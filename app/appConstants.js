@@ -2,7 +2,7 @@ export const FIREBASE_URL = 'https://glowing-torch-3956.firebaseio.com';
 
 const DEV_URL = 'http://localhost:8080';
 
-const BASE_URL = 'http://flavr.herokuapp.com';
+const BASE_URL = 'https://flavr.herokuapp.com';
 
 export const DEV_YELP_SEARCH_ENDPOINT = DEV_URL + '/api/search?';
 

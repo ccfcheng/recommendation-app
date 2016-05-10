@@ -1,6 +1,9 @@
 import 'whatwg-fetch';
-import { YELP_SEARCH_ENDPOINT } from '../appConstants';
-import { setLocalRecs } from './YelpReducer';
+import { DEV_YELP_SEARCH_ENDPOINT } from '../appConstants';
+import {
+  setLoadingStatus,
+  setLocalRecs,
+} from './YelpReducer';
 
 const makeYelpQuery = (queryObj) => {
   // Include these fields by default
@@ -38,7 +41,7 @@ const makeYelpRequest = (queryString) => {
     mode: 'cors'
   };
 
-  const url = YELP_SEARCH_ENDPOINT + queryString;
+  const url = DEV_YELP_SEARCH_ENDPOINT + queryString;
   return new Request(url, options);
 
 };
@@ -55,6 +58,7 @@ export const geoPromise = () => {
 
 export const localSearch = () => (dispatch, getState) => {
   console.log('starting localSearch()');
+  dispatch(setLoadingStatus(true));
   return geoPromise().then((geo) => {
     console.log('geocoordinates received, starting yelp query');
     const lat = geo.coords.latitude;
@@ -68,24 +72,10 @@ export const localSearch = () => (dispatch, getState) => {
       .then((resData) => {
         console.log('fetch data:', resData);
         dispatch(setLocalRecs(resData.businesses));
+        dispatch(setLoadingStatus(false));
         console.log('current redux state:', getState());
       })
-      .catch((err) => console.log('fetch error:', err));
+      .catch((err) => console.warn('fetch error:', err));
 
-  }).catch((err) => console.log('geolocation error:', err));
+  }).catch((err) => console.warn('geolocation error:', err));
 };
-
-// const Yelp = require('yelp');
-
-// const yelp = new Yelp({
-//   consumer_key: process.env.YELP_CONSUMER_KEY,
-//   consumer_secret: process.env.YELP_CONSUMER_SECRET,
-//   token: process.env.YELP_TOKEN,
-//   token_secret: process.env.YELP_TOKEN_SECRET,
-// });
-
-// export const search = () => {
-//   yelp.search({term: 'restaurants', location: 'Sacramento'})
-//     .then((data) => console.log('yelp data:', data))
-//     .catch((err) => console.warn('yelp error:', err));
-// };

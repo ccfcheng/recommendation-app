@@ -1,4 +1,5 @@
 const initialState = {
+  isLoading: false,
   localRecs: [],
   searchResults: [],
 };
@@ -17,6 +18,8 @@ export default function YelpReducer(state = initialState, action) {
         state,
         {searchResults: action.searchResults}
       );
+    case 'SET_LOADING_STATUS':
+      return Object.assign({}, state, {isLoading: action.isLoading});
     case 'RESET_RESULTS':
       return initialState;
     default:
@@ -40,6 +43,14 @@ export const setSearchResults = (searchResults) => {
     {},
     {searchResults},
     {type: 'SET_SEARCH_RESULTS'}
+  );
+};
+// isLoading is a boolean
+export const setLoadingStatus = (isLoading) => {
+  return Object.assign(
+    {},
+    {isLoading},
+    {type: 'SET_LOADING_STATUS'}
   );
 };
 
