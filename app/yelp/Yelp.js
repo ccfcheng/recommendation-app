@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import { DEV_YELP_SEARCH_ENDPOINT } from '../appConstants';
+import { YELP_SEARCH_ENDPOINT } from '../appConstants';
 import {
   setLoadingStatus,
   setLocalRecs,
@@ -41,7 +41,7 @@ const makeYelpRequest = (queryString) => {
     mode: 'cors'
   };
 
-  const url = DEV_YELP_SEARCH_ENDPOINT + queryString;
+  const url = YELP_SEARCH_ENDPOINT + queryString;
   return new Request(url, options);
 
 };
