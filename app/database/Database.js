@@ -1,6 +1,4 @@
 import Firebase from 'firebase';
-// import { FIREBASE_URL, USERS_URL } from '../appConstants';
-
 // Use `import Database from '../database/Database'` to use
 // Instantiate with `const DB = new Database(FIREBASE_URL)`
 export default class Database {
@@ -23,16 +21,14 @@ export default class Database {
       })
       .catch((error) => {
         // TODO: Add other error handling
-        console.warn('login(): User could not log in');
-        return error;
+        console.warn('login(): User could not log in:', error);
+        return;
       });
   }
-
   // logout() unauthenticates the user from the Firebase ref
   logout() {
     this.ref.unauth();
   }
-
   // profile() returns the profile data for the authenticated user
   profile() {
     const authData = this.ref.getAuth();
@@ -44,7 +40,6 @@ export default class Database {
       return;
     }
   }
-
   // set(dataObj, ...fields) is a generic setter function, writes the info in
   // the dataObj to the path specified by the fields string arguments
   set(dataObj, ...fields) {
@@ -52,7 +47,6 @@ export default class Database {
     const newRef = new Firebase(url);
     newRef.set(dataObj);
   }
-
   // get(...fields) is a generic getter function, returns a promise that resolves
   // to the data stored at the path specified by the fields string arguments
   get(...fields) {
