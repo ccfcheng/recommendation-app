@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { localSearch } from '../yelp/Yelp';
 import { connect } from 'react-redux';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
+import DetailContainer from '../detail/Detail';
 
 class RecommendationsContainer extends Component {
   componentDidMount() {
+    // Switch comments when using webpack dev server
+    // console.log('fakeResults:', this.props.results[0]);
     this.props.dispatch(localSearch());
   }
 
@@ -42,13 +45,14 @@ class Recommendations extends Component {
     return (
       <div style={styles.content}>
 
-        <h1>Recommendations Screen</h1>
-
-        <ol>
-          {this.props.results.map((business) => {
-            return <li key={business.id}>{business.name}</li>;
-          })}
-        </ol>
+        {this.props.results.map((business) => {
+          return (
+            <DetailContainer
+              key={business.id}
+              business={business}
+            />
+          );
+        })}
 
       </div>
 
@@ -77,6 +81,8 @@ const styles = {
 function mapStateToProps(state) {
   return {
     isLoading: state.yelp.isLoading,
+    // Switch comments for webpack dev sever
+    // results: state.yelp.fakeResults,
     results: state.yelp.localRecs,
   };
 }
