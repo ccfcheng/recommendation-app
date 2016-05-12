@@ -19,16 +19,21 @@ import LoginReducer from './login/LoginReducer';
 import ProfileContainer from './profile/Profile';
 import RecommendationsContainer from './recommendations/Recommendations';
 import SearchContainer from './search/Search';
+import SearchReducer from './search/SearchReducer';
 import YelpReducer from './yelp/YelpReducer';
+import createLogger from 'redux-logger';
 
 injectTapEventPlugin();
 
 const reducer = combineReducers({
   user: LoginReducer,
   yelp: YelpReducer,
+  search: SearchReducer,
 });
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const logger = createLogger();
+
+const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 const appContainer = document.getElementById('app');
 

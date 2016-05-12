@@ -7,11 +7,11 @@ describe('LoginReducer.js:', () => {
   describe('setUserProfile()', () => {
     it('Should return a valid dispatch object', () => {
       const profile = {
+        createdAt: 'May 6, 2016',
         email: 'test@gmail.com',
         firstName: 'test',
         lastName: 'user',
         profileImage: 'http://a.b.com',
-        uid: 'facebook:12345',
       };
       const expected = Object.assign({}, profile, {type: 'SET_USER_PROFILE'});
       expect(Login.setUserProfile(profile)).to.deep.equal(expected);
@@ -30,40 +30,40 @@ describe('LoginReducer.js:', () => {
   describe('LoginReducer()', () => {
     it('Should have the correct initial state', () => {
       const expected = {
-        email: null,
-        firstName: null,
-        lastName: null,
-        profileImage: null,
-        uid: null,
+        createdAt: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        profileImage: '',
       };
       expect(LoginReducer(undefined, {})).to.deep.equal(expected);
     });
 
     it('Should respond correctly to SET_USER_PROFILE action', () => {
       const expected = {
-        email: null,
-        uid: 'facebook:12345',
+        createdAt: '',
+        email: '',
         firstName: 'test',
         lastName: 'user',
-        profileImage: null,
+        profileImage: '',
       };
       const profile = {
-        email: null,
-        uid: 'facebook:12345',
+        createdAt: '',
+        email: '',
         firstName: 'test',
         lastName: 'user',
-        profileImage: null,
+        profileImage: '',
       };
       expect(LoginReducer(undefined, Login.setUserProfile(profile))).to.deep.equal(expected);
     });
 
     it('Should respond correctly to RESET_USER action', () => {
       const expected = {
-        email: null,
-        firstName: null,
-        lastName: null,
-        profileImage: null,
-        uid: null,
+        createdAt: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+        profileImage: '',
       };
       expect(LoginReducer(undefined, Login.resetUser())).to.deep.equal(expected);
     });

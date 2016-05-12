@@ -31,7 +31,6 @@ export default function YelpReducer(state = initialState, action) {
 }
 // localRecs is an array of businesses from Yelp
 export const setLocalRecs = (localRecs) => {
-  // console.log('setLocalRecs called with:', localRecs);
   const result = Object.assign(
     {},
     {localRecs},

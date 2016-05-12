@@ -1,41 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Database from '../database/Database';
 import { FIREBASE_URL } from '../appConstants';
 import Avatar from 'material-ui/Avatar';
+import { setUserProfile } from '../login/LoginReducer';
 
 const DB = new Database(FIREBASE_URL);
 
 class ProfileContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      createdAt: null,
-      firstName: null,
-      lastName: null,
-      profileImage: null,
-    };
+    this.componentWillMount = this.componentWillMount.bind(this);
   }
 
   componentWillMount() {
-    const uid = DB.profile().uid;
-    DB.get('users', uid).then((profile) => {
-      const {
-        createdAt,
-        firstName,
-        lastName,
-        profileImage,
-      } = profile;
-      this.setState({createdAt, firstName, lastName, profileImage});
-    });
+    // Grab user info from database, load into redux
+    return DB.profile()
+      .then((profile) => {
+        this.props.dispatch(setUserProfile(profile));
+      });
+
   }
 
   render() {
     return (
       <Profile
-        createdAt={this.state.createdAt}
-        firstName={this.state.firstName}
-        lastName={this.state.lastName}
-        profileImage={this.state.profileImage}
+        createdAt={this.props.createdAt}
+        email={this.props.email}
+        firstName={this.props.firstName}
+        lastName={this.props.lastName}
+        profileImage={this.props.profileImage}
       />
     );
   }
@@ -46,6 +40,7 @@ class Profile extends Component {
   render() {
     const {
       createdAt,
+      email,
       firstName,
       lastName,
       profileImage,
@@ -65,7 +60,11 @@ class Profile extends Component {
           {firstName + ' ' + lastName}
         </div>
 
-        <div style={styles.joined}>
+        <div style={styles.email}>
+          Contact: {email}
+        </div>
+
+        <div style={styles.createdAt}>
           Joined on {createdAt}
         </div>
 
@@ -74,7 +73,17 @@ class Profile extends Component {
   }
 }
 
-export default ProfileContainer;
+function mapStateToProps(state) {
+  return {
+    createdAt: state.user.createdAt,
+    email: state.user.email,
+    firstName: state.user.firstName,
+    lastName: state.user.lastName,
+    profileImage: state.user.profileImage,
+  };
+}
+
+export default connect(mapStateToProps)(ProfileContainer);
 
 const styles = {
   content: {
@@ -88,7 +97,13 @@ const styles = {
     fontWeight: 'bold',
   },
 
-  joined: {
+  email: {
+    padding: '0.5em 0em',
+    fontSize: '1em',
+  },
+
+  createdAt: {
+    padding: '0.5em 0em',
     fontStyle: 'italic',
     fontSize: '0.75em',
   },
