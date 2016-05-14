@@ -1,9 +1,9 @@
 const initialState = {
-  email: null,
-  firstName: null,
-  lastName: null,
-  profileImage: null,
-  uid: null,
+  createdAt: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  profileImage: '',
 };
 
 export default function LoginReducer(state = initialState, action) {
@@ -12,10 +12,10 @@ export default function LoginReducer(state = initialState, action) {
       return Object.assign(
         {},
         state,
+        {createdAt: action.createdAt},
         {email: action.email},
         {firstName: action.firstName},
         {lastName: action.lastName},
-        {uid: action.uid},
         {profileImage: action.profileImage}
       );
     case 'RESET_USER':
@@ -31,7 +31,6 @@ export default function LoginReducer(state = initialState, action) {
 //   firstName: STRING,
 //   lastName: STRING,
 //   profileImage: URL_STRING,
-//   uid: STRING,
 // }
 export const setUserProfile = (profile) => {
   return Object.assign({}, profile, {type: 'SET_USER_PROFILE'});

@@ -6,7 +6,7 @@ export default class Database {
   constructor(firebase_url) {
     this.firebase_url = firebase_url;
     this.ref = new Firebase(firebase_url);
-    // this.usersRef = this.ref.child('users');
+    this.usersRef = this.ref.child('users');
     // this.favoritesRef = this.ref.child('favorites');
   }
 
@@ -19,11 +19,7 @@ export default class Database {
       .then((authData) => {
         return authData;
       })
-      .catch((error) => {
-        // TODO: Add other error handling
-        console.warn('login(): User could not log in:', error);
-        return;
-      });
+      .catch((err) => err);
   }
   // logout() unauthenticates the user from the Firebase ref
   logout() {
@@ -33,10 +29,11 @@ export default class Database {
   profile() {
     const authData = this.ref.getAuth();
     if (authData) {
-      return authData;
+      const uid = authData.uid;
+      return this.get('users', uid)
+        .then((data) => data);
     } else {
       // TODO: Add other error handling
-      console.warn('profile(): User not logged in');
       return;
     }
   }
@@ -54,7 +51,7 @@ export default class Database {
     const newRef = new Firebase(url);
     return newRef.once('value')
       .then((data) => data.val())
-      .catch((error) => console.warn(error));
+      .catch((err) => err);
   }
 
 }

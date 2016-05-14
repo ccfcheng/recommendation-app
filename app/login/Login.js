@@ -10,28 +10,27 @@ import { FIREBASE_URL } from '../appConstants';
 
 const DB = new Database(FIREBASE_URL);
 
-class LoginContainer extends Component{
+class LoginContainer extends Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
+    this.saveProfile = this.saveProfile.bind(this);
   }
 
   saveProfile(authData) {
     const uid = authData.uid;
-    // Only do the following if uid is not registered
+    // If uid is not registered, save profile to database
     DB.get('users', uid).then((data) => {
       if (data === null) {
         let profile = {};
+        profile.createdAt = moment().format('MMM D, YYYY');
         profile.email = authData.facebook.email || '';
         profile.firstName = authData.facebook.cachedUserProfile.first_name || '';
         profile.lastName = authData.facebook.cachedUserProfile.last_name || '';
         profile.profileImage = authData.facebook.profileImageURL || '';
-        profile.createdAt = moment().format('MMM D, YYYY');
-        // Set profile at path
         DB.set(profile, 'users', uid);
       }
     });
-
   }
 
   onLogin() {

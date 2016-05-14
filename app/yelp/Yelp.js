@@ -1,11 +1,12 @@
 import 'whatwg-fetch';
-import { YELP_SEARCH_ENDPOINT } from '../appConstants';
+import { SEARCH_ENDPOINT } from '../appConstants';
 import {
   setLoadingStatus,
   setLocalRecs,
 } from './YelpReducer';
+import url from 'url';
 
-const makeYelpQuery = (queryObj) => {
+const makeYelpURL = (queryObj) => {
   // Include these fields by default
   const defaults = {
     // Always search restaurants
@@ -18,32 +19,25 @@ const makeYelpQuery = (queryObj) => {
   };
   const query = Object.assign({}, defaults, queryObj);
 
-  let stringArr = [], param;
-  for (let key in query) {
-    if (Array.isArray(query[key])) {
-      param = key + '=' + encodeURIComponent(query[key].join(','));
-    } else {
-      param = key + '=' + encodeURIComponent(query[key]);
-    }
-    stringArr.push(param);
-  }
-  return stringArr.join('&');
-};
-
-const makeYelpRequest = (queryString) => {
-  const headers = new Headers({
-    'Accept': 'application/json'
+  const yelpURL = url.format({
+    slashes: true,
+    host: url.parse(window.location.href).host,
+    pathname: SEARCH_ENDPOINT,
+    query,
   });
 
+  return yelpURL;
+};
+
+const makeYelpRequest = (yelpURL) => {
   const options = {
     method: 'GET',
-    headers: headers,
+    headers: new Headers({
+      'Accept': 'application/json'
+    }),
     mode: 'cors'
   };
-
-  const url = YELP_SEARCH_ENDPOINT + queryString;
-  return new Request(url, options);
-
+  return new Request(yelpURL, options);
 };
 
 export const geoPromise = () => {
@@ -56,26 +50,34 @@ export const geoPromise = () => {
   });
 };
 
-export const localSearch = () => (dispatch, getState) => {
-  console.log('starting localSearch()');
+// fetchYelp(searchObj) takes a searchObj and returns a promise that resolves
+// to a JSON object with the yelp response using default search params
+const fetchYelp = (searchObj) => {
+  const queryObj = {
+    ll: searchObj.latitude + ',' + searchObj.longitude,
+  };
+  const yelpURL = makeYelpURL(queryObj);
+  const request = makeYelpRequest(yelpURL);
+  return fetch(request)
+    .then((res) => res.json())
+    .catch((err) => err);
+};
+
+export const fetchLocal = () => (dispatch, getState) => {
   dispatch(setLoadingStatus(true));
-  return geoPromise().then((geo) => {
-    console.log('geocoordinates received, starting yelp query');
-    const lat = geo.coords.latitude;
-    const lng = geo.coords.longitude;
-    const queryObj = {ll: [lat, lng]};
-    const query = makeYelpQuery(queryObj);
-    const request = makeYelpRequest(query);
-
-    return fetch(request)
-      .then((res) => res.json())
-      .then((resData) => {
-        console.log('fetch data:', resData);
+  const state = getState();
+  const latitude = state.search.latitude;
+  const longitude = state.search.longitude;
+  const searchObj = { latitude, longitude };
+  return fetchYelp(searchObj)
+    .then((resData) => {
+      if (resData.businesses) {
         dispatch(setLocalRecs(resData.businesses));
-        dispatch(setLoadingStatus(false));
-        console.log('current redux state:', getState());
-      })
-      .catch((err) => console.warn('fetch error:', err));
+      }
+      dispatch(setLoadingStatus(false));
+    })
+    .catch(() => {
+      dispatch(setLoadingStatus(false));
+    });
 
-  }).catch((err) => console.warn('geolocation error:', err));
 };
