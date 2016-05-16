@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setPath } from '../appReducer';
 import Database from '../database/Database';
 import { FIREBASE_URL } from '../appConstants';
 import Avatar from 'material-ui/Avatar';
@@ -15,11 +16,11 @@ class ProfileContainer extends Component {
 
   componentWillMount() {
     // Grab user info from database, load into redux
+    this.props.dispatch(setPath('Profile'));
     return DB.profile()
       .then((profile) => {
         this.props.dispatch(setUserProfile(profile));
       });
-
   }
 
   render() {

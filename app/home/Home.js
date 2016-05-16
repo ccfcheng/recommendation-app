@@ -48,6 +48,7 @@ class HomeContainer extends Component {
         handleDrawer={this.handleDrawer}
         handleMenuClick={this.handleMenuClick}
         childNodes={this.props.children}
+        path={this.props.path}
       />
     );
   }
@@ -66,22 +67,17 @@ class Home extends Component {
           onRequestChange={(open) => this.props.handleDrawer(open)}
         >
           <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/search');}}
-            primaryText="Search"
-            leftIcon={<ActionSearch/>}
-          />
-          <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/favorites');}}
+            onTouchTap={() => this.props.handleMenuClick('/favorites')}
             primaryText="Favorites"
             leftIcon={<ActionFavorite/>}
           />
           <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/profile');}}
+            onTouchTap={() => this.props.handleMenuClick('/profile')}
             primaryText="Profile"
             leftIcon={<ActionIdentity/>}
           />
           <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/');}}
+            onTouchTap={() => this.props.handleMenuClick('/')}
             primaryText="Sign out"
             leftIcon={<ActionExit/>}
           />
@@ -89,11 +85,17 @@ class Home extends Component {
 
         <AppBar
           style={styles.navBar}
-          title={<div style={styles.title}>flavr</div>}
+          title={<div style={styles.title}>{this.props.path}</div>}
           iconElementLeft={
             <IconButton onClick={this.props.handleToggle}>
               <NavMenu />
-            </IconButton>}
+            </IconButton>
+          }
+          iconElementRight={
+            <IconButton onClick={() => this.props.handleMenuClick('/search')}>
+              <ActionSearch/>
+            </IconButton>
+          }
         />
 
         {this.props.childNodes}
@@ -119,4 +121,10 @@ const styles = {
   },
 };
 
-export default connect()(HomeContainer);
+function mapStateToProps(state) {
+  return {
+    path: state.app.path,
+  };
+}
+
+export default connect(mapStateToProps)(HomeContainer);
