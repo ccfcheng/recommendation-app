@@ -1,28 +1,12 @@
 import React, { Component } from 'react';
-import { fetchLocal } from '../yelp/Yelp';
-import {
-  setCoordsStatus,
-  setSearchCoords,
-} from '../search/SearchReducer';
 import { connect } from 'react-redux';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import DetailContainer from '../detail/Detail';
-import { findGeoCoords } from '../location/LocationAPI';
 
 class RecommendationsContainer extends Component {
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-
-    return findGeoCoords()
-      .then((coords) => {
-        dispatch(setCoordsStatus(true));
-        dispatch(setSearchCoords(coords.latitude, coords.longitude));
-        dispatch(fetchLocal());
-      })
-      .catch(() => dispatch(setCoordsStatus(false)));
-  }
-
+  // TODO: Need a function that maps over results in props, and enriches the
+  // results in case a necessary field for Details view is missing from data
+  
   render() {
     if (this.props.isLoading) {
       return (
@@ -37,7 +21,6 @@ class RecommendationsContainer extends Component {
 }
 
 class LoadingSpinner extends Component {
-
   render() {
     return (
       <div style={styles.container}>
@@ -54,7 +37,6 @@ class LoadingSpinner extends Component {
 }
 
 class Recommendations extends Component {
-
   render() {
     return (
       <div style={styles.content}>

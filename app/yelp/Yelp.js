@@ -9,13 +9,11 @@ import url from 'url';
 const makeYelpURL = (queryObj) => {
   // Include these fields by default
   const defaults = {
-    // Always search restaurants
-    term: 'restaurants',
     // Default 5 mile search, can override in queryObj
     radius_filter: 8000,
     // 1=Distance, 2=Highest Rated
     // Use 0 if I eventually scrape all results in an area
-    sort: 2,
+    sort: 1,
   };
   const query = Object.assign({}, defaults, queryObj);
 
@@ -55,6 +53,7 @@ export const geoPromise = () => {
 const fetchYelp = (searchObj) => {
   const queryObj = {
     ll: searchObj.latitude + ',' + searchObj.longitude,
+    term: searchObj.term,
   };
   const yelpURL = makeYelpURL(queryObj);
   const request = makeYelpRequest(yelpURL);
@@ -63,12 +62,14 @@ const fetchYelp = (searchObj) => {
     .catch((err) => err);
 };
 
-export const fetchLocal = () => (dispatch, getState) => {
+export const fetchLocal = (obj) => (dispatch, getState) => {
   dispatch(setLoadingStatus(true));
   const state = getState();
   const latitude = state.search.latitude;
   const longitude = state.search.longitude;
-  const searchObj = { latitude, longitude };
+  const term = 'restaurants';
+  // Use defauts or passed in value
+  const searchObj = obj || { latitude, longitude, term };
   return fetchYelp(searchObj)
     .then((resData) => {
       if (resData.businesses) {
