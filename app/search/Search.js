@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { setPath } from '../appReducer';
 import { findGeoCoords } from '../location/LocationAPI';
 import fetchJsonp from 'fetch-jsonp';
 import {
@@ -34,6 +35,10 @@ class SearchContainer extends Component {
     this.onCitySelect = this.onCitySelect.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
     this.onSearch = this.onSearch.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.dispatch(setPath('Search'));
   }
 
   onInput(event) {

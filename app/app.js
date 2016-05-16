@@ -12,6 +12,7 @@ import {
   createStore,
 } from 'redux';
 import thunk from 'redux-thunk';
+import appReducer from './appReducer';
 import FavoritesContainer from './favorites/Favorites';
 import HomeContainer from './home/Home';
 import LoginContainer from './login/Login';
@@ -29,6 +30,7 @@ const reducer = combineReducers({
   user: LoginReducer,
   yelp: YelpReducer,
   search: SearchReducer,
+  app: appReducer,
 });
 
 const logger = createLogger();

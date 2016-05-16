@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setPath } from '../appReducer';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import DetailContainer from '../detail/Detail';
 
 class ResultsContainer extends Component {
+  componentWillMount() {
+    this.props.dispatch(setPath('Results'));
+  }
   // TODO: Need a function that maps over results in props, and enriches the
   // results in case a necessary field for Details view is missing from data
 

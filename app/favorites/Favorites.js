@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setPath } from '../appReducer';
 
-export default class FavoritesContainer extends Component {
+class FavoritesContainer extends Component {
+  componentWillMount() {
+    this.props.dispatch(setPath('Favorites'));
+  }
+
   render() {
     return (
       <Favorites/>
@@ -23,3 +29,5 @@ const styles = {
     marginTop: '54px',
   },
 };
+
+export default connect()(FavoritesContainer);
