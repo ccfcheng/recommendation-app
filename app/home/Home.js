@@ -7,8 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import ActionIdentity from 'material-ui/svg-icons/action/perm-identity';
-import ActionHistory from 'material-ui/svg-icons/action/history';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionExit from 'material-ui/svg-icons/action/exit-to-app';
 import NavMenu from 'material-ui/svg-icons/navigation/menu';
 import Database from '../database/Database';
@@ -67,19 +66,14 @@ class Home extends Component {
           onRequestChange={(open) => this.props.handleDrawer(open)}
         >
           <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/recommendations');}}
-            primaryText="Home"
-            leftIcon={<ActionHome/>}
-          />
-          <MenuItem
             onTouchTap={() => {this.props.handleMenuClick('/search');}}
             primaryText="Search"
             leftIcon={<ActionSearch/>}
           />
           <MenuItem
-            onTouchTap={() => {this.props.handleMenuClick('/history');}}
-            primaryText="History"
-            leftIcon={<ActionHistory/>}
+            onTouchTap={() => {this.props.handleMenuClick('/favorites');}}
+            primaryText="Favorites"
+            leftIcon={<ActionFavorite/>}
           />
           <MenuItem
             onTouchTap={() => {this.props.handleMenuClick('/profile');}}

@@ -12,12 +12,12 @@ import {
   createStore,
 } from 'redux';
 import thunk from 'redux-thunk';
-import HistoryContainer from './history/History';
+import FavoritesContainer from './favorites/Favorites';
 import HomeContainer from './home/Home';
 import LoginContainer from './login/Login';
 import LoginReducer from './login/LoginReducer';
 import ProfileContainer from './profile/Profile';
-import RecommendationsContainer from './recommendations/Recommendations';
+import ResultsContainer from './results/Results';
 import SearchContainer from './search/Search';
 import SearchReducer from './search/SearchReducer';
 import YelpReducer from './yelp/YelpReducer';
@@ -44,9 +44,9 @@ render((
         <Route path="/" component={LoginContainer}/>
         <Route path="/home" component={HomeContainer}>
           <IndexRoute component={SearchContainer}/>
-          <Route path="/history" component={HistoryContainer}/>
+          <Route path="/favorites" component={FavoritesContainer}/>
           <Route path="/profile" component={ProfileContainer}/>
-          <Route path="/recommendations" component={RecommendationsContainer}/>
+          <Route path="/results" component={ResultsContainer}/>
           <Route path="/search" component={SearchContainer}/>
         </Route>
       </Router>
