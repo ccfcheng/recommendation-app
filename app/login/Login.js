@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import Database from '../database/Database';
 import { FIREBASE_URL } from '../appConstants';
+import {
+  setCurrentCoords,
+} from '../search/SearchReducer';
+import { findGeoCoords } from '../location/LocationAPI';
 
 const DB = new Database(FIREBASE_URL);
 
@@ -15,6 +19,16 @@ class LoginContainer extends Component {
     super(props);
     this.onLogin = this.onLogin.bind(this);
     this.saveProfile = this.saveProfile.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    return findGeoCoords()
+      .then((coords) => {
+        // Set current coordinates
+        dispatch(setCurrentCoords(coords.latitude, coords.longitude));
+      })
+      .catch((err) => err);
   }
 
   saveProfile(authData) {
@@ -129,4 +143,3 @@ class Login extends Component {
 }
 
 export default connect()(LoginContainer);
-

@@ -9,8 +9,8 @@ import {
   fetchLocal,
 } from '../yelp/Yelp';
 import {
-  setCoordsStatus,
   setSearchCoords,
+  setCurrentCoords,
 } from '../search/SearchReducer';
 import {
   AUTOCOMPLETE_ENDPOINT,
@@ -77,6 +77,7 @@ class SearchContainer extends Component {
     const searchObj = {term, latitude, longitude};
     // If text fields are filled out, we can do this
     if (latitude && longitude && term !== '') {
+      dispatch(setSearchCoords(latitude, longitude));
       dispatch(fetchLocal(searchObj));
       browserHistory.push('/results');
     }
@@ -86,10 +87,11 @@ class SearchContainer extends Component {
     const { dispatch } = this.props;
     return findGeoCoords()
       .then((coords) => {
-        dispatch(setCoordsStatus(true));
+        // Set current and search coordinates
         dispatch(setSearchCoords(coords.latitude, coords.longitude));
+        dispatch(setCurrentCoords(coords.latitude, coords.longitude));
       })
-      .catch(() => dispatch(setCoordsStatus(false)));
+      .catch((err) => err);
   }
 
   render() {

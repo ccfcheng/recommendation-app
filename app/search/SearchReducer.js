@@ -1,18 +1,27 @@
 const initialState = {
-  latitude: null,
-  longitude: null,
+  currentLatitude: null,
+  currentLongitude: null,
+  searchLatitude: null,
+  searchLongitude: null,
   term: 'restaurants',
   haveCoords: false,
 };
 
 export default function SearchReducer(state = initialState, action) {
   switch (action.type) {
+    case 'SET_CURRENT_COORDS':
+      return Object.assign(
+        {},
+        state,
+        {currentLatitude: action.currentLatitude},
+        {currentLongitude: action.currentLongitude}
+      );
     case 'SET_SEARCH_COORDS':
       return Object.assign(
         {},
         state,
-        {latitude: action.latitude},
-        {longitude: action.longitude}
+        {searchLatitude: action.searchLatitude},
+        {searchLongitude: action.searchLongitude}
       );
     case 'SET_SEARCH_TERMS':
       return Object.assign(
@@ -31,8 +40,12 @@ export default function SearchReducer(state = initialState, action) {
   }
 }
 
-export const setSearchCoords = (latitude, longitude) => {
-  return Object.assign({}, {latitude, longitude}, {type: 'SET_SEARCH_COORDS'});
+export const setCurrentCoords = (currentLatitude, currentLongitude) => {
+  return Object.assign({}, {currentLatitude, currentLongitude}, {type: 'SET_CURRENT_COORDS'});
+};
+
+export const setSearchCoords = (searchLatitude, searchLongitude) => {
+  return Object.assign({}, {searchLatitude, searchLongitude}, {type: 'SET_SEARCH_COORDS'});
 };
 
 export const setSearchTerms = (term) => {
