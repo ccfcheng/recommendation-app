@@ -13,3 +13,7 @@ const yelp = new Yelp({
 });
 
 module.exports = yelp;
+
+// TODO: Import Firebase into this module, set up to scrape all restaurants in a
+// given radius for a specific city, store in database under qualified city name
+// TODO: Change what we export here to give back proper results from database

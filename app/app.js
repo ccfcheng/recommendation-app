@@ -43,7 +43,7 @@ render((
       <Router history={browserHistory}>
         <Route path="/" component={LoginContainer}/>
         <Route path="/home" component={HomeContainer}>
-          <IndexRoute component={RecommendationsContainer}/>
+          <IndexRoute component={SearchContainer}/>
           <Route path="/history" component={HistoryContainer}/>
           <Route path="/profile" component={ProfileContainer}/>
           <Route path="/recommendations" component={RecommendationsContainer}/>
