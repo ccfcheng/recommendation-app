@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import DetailContainer from '../detail/Detail';
 
-class RecommendationsContainer extends Component {
+class ResultsContainer extends Component {
   // TODO: Need a function that maps over results in props, and enriches the
   // results in case a necessary field for Details view is missing from data
-  
+
   render() {
     if (this.props.isLoading) {
       return (
@@ -14,7 +14,7 @@ class RecommendationsContainer extends Component {
       );
     } else {
       return (
-        <Recommendations results={this.props.results}/>
+        <Results results={this.props.results}/>
       );
     }
   }
@@ -36,7 +36,7 @@ class LoadingSpinner extends Component {
   }
 }
 
-class Recommendations extends Component {
+class Results extends Component {
   render() {
     return (
       <div style={styles.content}>
@@ -83,4 +83,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(RecommendationsContainer);
+export default connect(mapStateToProps)(ResultsContainer);

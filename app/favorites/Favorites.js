@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-export default class HistoryContainer extends Component {
+export default class FavoritesContainer extends Component {
   render() {
     return (
-      <History/>
+      <Favorites/>
     );
   }
 }
 
-class History extends Component {
+class Favorites extends Component {
   render() {
     return (
       <div style={styles.content}>
-        <h1>History Screen</h1>
+        <h1>Favorites Screen</h1>
       </div>
     );
   }

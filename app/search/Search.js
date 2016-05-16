@@ -78,7 +78,7 @@ class SearchContainer extends Component {
     // If text fields are filled out, we can do this
     if (latitude && longitude && term !== '') {
       dispatch(fetchLocal(searchObj));
-      browserHistory.push('/recommendations');
+      browserHistory.push('/results');
     }
   }
   // TODO: Runs when user hits the current location button
