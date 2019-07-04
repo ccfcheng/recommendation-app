@@ -23,7 +23,9 @@
     "serve": "webpack-dev-server --inline --content-base . --history-api-fallback",
     "serve:dist": "npm run bundle && npm start",
     "start": "NODE_ENV=production node --harmony ./index.js",
-    "test": "npm run mocha && npm run lint"
+    "test": "npm run mocha && npm run lint",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -62,7 +64,8 @@
     "url": "^0.11.0",
     "webpack": "^1.13.0",
     "whatwg-fetch": "^1.0.0",
-    "yelp": "^1.0.1"
+    "yelp": "^1.0.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -71,5 +74,6 @@
     "mocha": "^2.4.5",
     "nodemon": "^1.9.2",
     "webpack-dev-server": "^1.14.1"
-  }
+  },
+  "snyk": true
 }
